@@ -1,2 +1,2 @@
 # lstmStockForecast
-Predicting the next avergae price of a stock
+Forecasting the next average price of a stock
