@@ -81,15 +81,18 @@ def inverse_preprocess(orig_data, predict, previous):
 #Stock Ticker
 ticker = 'FMC'
 #Timeframe of stock price data to r
-start = datetime(2012,7,1)
-end = datetime(2017,8,31)
+start = datetime(2010,1,1)
+end = datetime(2015,12,31)
 #Time range ['M', 'W', 'D', 'A', 'Q']
-time_range = 'M'
+time_range = 'D'
+#Name of lstm model to be saved
+model_name = 'model_10_15_D.h5'
 #Number of time instances to test on
 test_inst = 12
 #Number of past stock prices and volumes to use to predict future prices
 num_prev = 4
 #Number of future stock prices to predict
+#Keep at 1 for now, script not updated yet
 num_pred = 1
 #Number of epochs
 epochs = 1000
@@ -100,7 +103,7 @@ hidden_neurons = 8
 #Batch Size
 batch_size = 1
 #Number of trials to execute
-trials = 5
+trials = 1
 
 print('Retrieving Stock Data...')
 data = get_stock(ticker, start, end, time_range)
@@ -117,6 +120,7 @@ print('Fitting and Testing Model...')
 error_scores = []
 for i in range(trials):
     model = fit_lstm(train, batch_size, epochs, input_neurons, hidden_neurons)
+    model.save('{}'.format(model_name))
     predictions = []
     for j in range(len(test)):
         X = test[j,0:-1]
